@@ -20,6 +20,17 @@ def send_dog_photo(chat_id,caption=''):
     }
     update = requests.get(f"{base_url}/sendPhoto",params=params)
     return update.status_code
+def send_cat_photo(chat_id,caption=''):
+    url='https://api.thecatapi.com/v1/images/search'
+    t=requests.get(url)
+    photo=t.json()[0]['url']
+    params={
+        'chat_id':chat_id,
+        'photo':photo,
+        'caption':caption
+    }
+    update = requests.get(f"{base_url}/sendPhoto",params=params)
+    return update.status_code
 def get_updates():
     url = f"{base_url}/getUpdates"
     response = requests.get(url)
@@ -87,6 +98,8 @@ while True:
             send_message(chat_id, "Welcome to Echo Bot!")
         elif text=="Dog🐶":
             send_dog_photo(chat_id)
+        elif text=="Cat😺":
+            send_cat_photo(chat_id)
         else:
             send_message(chat_id, text)
 
